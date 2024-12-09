@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Serviço</title>
+
+    <style>
+        *{
+            font-family: Arial, sans-serif;
+        }
+
+        header{
+            background-color: #05a5b1;
+            padding: 1rem;
+            text-align: center;
+            color: white; 
+        }
+
+        .service-registration-container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-registration-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2196f3;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        button {
+            width: 150px;
+            padding: 8px;
+            background-color: #ff9800;
+            border: 10px;
+            border-radius: 4px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer; 
+        }
+
+        footer {
+          background-color: #05a5b1;
+          color: white;
+          text-align: center;
+          position: fixed;
+          bottom: 0;
+          width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>PetShop- Registrar Serviço</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Cadastrar Serviço</h2>
+            <form id="serviceForm">
+                <div>
+                    <label for="nomeServico">Nome do Serviço</label>
+                    <input type="text" id="nomeServico" placeholder="Digite o Serviço que você deseja" required>
+                </div>
+                <div>
+                    <label for="descServico">Descrição do Serviço</label>
+                    <textarea id="descServico" placeholder="Digite a descrição do serviço" rows="4" required></textarea>
+                </div>
+                <div>
+                    <label for="valorServico">Preço do Serviço</label>
+                    <input type="text" id="valorServico" placeholder="Digite o preço do Serviço" step="0.01" required>
+                </div>
+                <button type="submit">Cadastrar Serviço</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 PetShop Carinhos e Patas - Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const cadasServico = document.getElementById("serviceForm");
+
+            cadasServico.addEventListener("submit", async (event) => {
+                event.preventDefault();
+
+                const nomeServico = document.getElementById("nomeServico").value;
+                const descServico = document.getElementById("descServico").value;
+                const valorServico = document.getElementById("valorServico").value;
+
+                try {
+                    const response = await fetch("http://localhost:8080/api/login&quot", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ nomeServico, descServico, valorServico })
+                    });
+
+                    if (response.ok) {                  
+                        alert("Login bem-sucedido!");
+                        window.location.href = "./index";
+                    } else {
+                        alert("Informações inválidas. Tente novamente.");
+                    }
+                } catch (error) {
+                    console.error("Erro ao conectar com o servidor:", error);
+                    alert("Erro ao conectar com o servidor. Tente novamente mais tarde.");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <style>
+        *{
+            font-family: Arial, sans-serif;
+        }
+
+        header{
+            background-color: #05a5b1;
+            padding: 1rem;
+            text-align: center;
+            color: white; 
+        }
+
+        .login-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #ff9800;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 150px;
+            padding: 8px;
+            background-color: #ff9800;
+            border: 10px;
+            border-radius: 4px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer; 
+        }
+
+        button:hover {
+            background-color: #e68900;
+        }
+
+        a {
+            color: #ff9800;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+          background-color: #05a5b1;
+          color: white;
+          text-align: center;
+          position: fixed;
+          bottom: 0;
+          width: 100%;
+        }
+
+</style>
+</head>
+<body>
+    <header>
+        <h1>Login PetShop</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Faça o seu Login</h2>
+            <form id="loginForm">
+                <div>
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" placeholder="Digite o seu E-mail" required>
+                </div>
+                <div>
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" placeholder="Digite sua Senha" required>
+                </div>
+                <button type="submit">Entrar</button>
+            </form>
+            <p>Ainda não tem uma conta? <a href="singup.html">Cadastre-se</a></p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 PetShop Carinhos e Patas - Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const loginForm = document.getElementById("loginForm");
+
+            loginForm.addEventListener("submit", async (event) => {
+                event.preventDefault();
+
+                const email = document.getElementById("email").value;
+                const password = document.getElementById("password").value;
+
+                try {
+                    const response = await fetch("http://localhost:8080/api/login&quot", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ email, password })
+                    });
+
+                    if (response.ok) {                  
+                        alert("Login bem-sucedido!");
+                        window.location.href = "./index";
+                    } else {
+                        alert("E-mail ou senha incorretos. Tente novamente.");
+                    }
+                } catch (error) {
+                    console.error("Erro ao conectar com o servidor:", error);
+                    alert("Erro ao conectar com o servidor. Tente novamente mais tarde.");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

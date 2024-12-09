@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Pet</title>
+
+    <style>
+        *{
+            font-family: Arial, sans-serif;
+        }
+
+        header{
+            background-color: #05a5b1;
+            padding: 1rem;
+            text-align: center;
+            color: white; 
+        }
+        
+        .pet-registration-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .pet-registration-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #4caf50;
+        }
+
+        button {
+            width: 150px;
+            padding: 8px;
+            background-color: #ff9800;
+            border: 10px;
+            border-radius: 4px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer; 
+        }
+
+        footer {
+          background-color: #05a5b1;
+          color: white;
+          text-align: center;
+          position: fixed;
+          bottom: 0;
+          width: 100%;
+        }
+        
+        button:hover {
+            background-color: #43a047;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Registrar Pet</h1>
+    </header>
+
+    <main>
+        <section>
+            <h2>Cadastre seu Pet</h2>
+            <form id="cadastroPet">
+                <div>
+                    <label for="nomePet">Nome do Pet:</label>
+                    <input type="text" id="nomePet" placeholder="Digite o nome do seu Pet" required>
+                </div>
+                <div>
+                    <label for="especiePet">Espécie do Pet:</label>
+                    <select id="especiePet" required>
+                        <option value="" disabled selected>Selecione a espécie</option>
+                        <option value="Cachorro">Cachorro</option>
+                        <option value="Gato">Gato</option>
+                        <option value="Ave">Ave</option>
+                        <option value="Peixe">Peixe</option>
+                        <option value="Exótico">Exótico</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="idadePet">Idade do Pet:</label>
+                    <input type="number" id="idadePet" placeholder="Digite a idade do seu Pet" required>
+                </div>
+                <div>
+                    <label for="pesoPet">Peso do Pet:</label>
+                    <input type="number" id="pesoPet" placeholder="Digite o peso do seu Pet" required>
+                </div>
+                <button type="submit">Cadastrar Pet</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 PetShop Carinhos e Patas - Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const cadastroForm = document.getElementById("cadastroPet");
+
+            cadastroForm.addEventListener("submit", async (event) => {
+                event.preventDefault();
+
+                const nomePet = document.getElementById("nomePet").value;
+                const especiePet = document.getElementById("especiePet").value;
+                const idadePet = document.querySelector("#idadePet").value;
+                const pesoPet = document.querySelector("#pesoPet").value;
+
+                try {
+                    const response = await fetch("http://localhost:8080/api/login&quot", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ nomePet, especiePet, idadePet, pesoPet })
+                    });
+
+                    if (response.ok) {                  
+                        alert("Cadastro bem-sucedido!");
+                        window.location.href = "./index";
+                    } else {
+                        alert("Informações inválidas. Tente novamente.");
+                    }
+                } catch (error) {
+                    console.error("Erro ao conectar com o servidor:", error);
+                    alert("Erro ao conectar com o servidor. Tente novamente mais tarde.");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
